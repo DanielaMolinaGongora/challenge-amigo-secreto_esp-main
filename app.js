@@ -1,8 +1,6 @@
 //Array
 let listaAmigos = [];
 
-let nombre;
-
 function asignar__Texto__Elemento (elemento, texto) {
     let elementoHTML = document.querySelector(elemento);
     elementoHTML.innerHTML = texto;
@@ -15,39 +13,45 @@ function actualizar__boton__sortear (){
 }
 
 
-function agregarAmigo () {
+function agregarAmigo() {
+    let nombre;
     nombre = document.getElementById("amigo").value;
     if (nombre === "") {
-        alert("Por favor, ingresa un nombre");}
-    else{
+        alert("Por favor, ingresa un nombre");
+    } else {
         if (listaAmigos.includes(nombre)) {
-            alert("Este nombre ya ha sido ingresado, agrega el nombre de otro amigo.");}
-        else{
+            alert("Este nombre ya ha sido ingresado, agrega el nombre de otro amigo.");
+        } else {
             listaAmigos.push(nombre);
             document.getElementById("amigo").value = "";
-            let ul = document.getElementById("listaAmigos");
-            let li =document.createElement("li");
-            li.textContent = nombre;
-            ul.appendChild(li);
+            actualizarListaAmigos(); // Usamos la nueva función para limpiar y actualizar la lista
             actualizar__boton__sortear();
-            //console.log(nombre);
-            
         }
-        
     }
 }
 
 function sortearAmigo() {
-    let amigoSorteado  = listaAmigos[Math.floor(Math.random() * listaAmigos.length)];
-
     if (listaAmigos.length === 0) {
         alert("No hay amigos para sortear.");
         return;
-    } else {
-    
-    asignar__Texto__Elemento("ul",`El amigo secreto es ${amigoSorteado}`);
-    listaAmigos = [];
-    actualizar__boton__sortear();
     }
 
+    let amigoSorteado = listaAmigos[Math.floor(Math.random() * listaAmigos.length)];
+    
+    asignar__Texto__Elemento("#resultado", `El amigo secreto es ${amigoSorteado}`); // Mostramos en un <p> en lugar de <ul>
+    
+    listaAmigos = []; // Limpiar la lista después de sortear
+    actualizarListaAmigos(); // Limpiar la lista en la UI
+    actualizar__boton__sortear();
+}
+
+function actualizarListaAmigos() {
+    let ul = document.getElementById("listaAmigos");
+    ul.innerHTML = ""; // Limpiar la lista antes de actualizar
+
+    for (let amigo of listaAmigos) {
+        let li = document.createElement("li");
+        li.textContent = amigo;
+        ul.appendChild(li);
+    }
 }
