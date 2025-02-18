@@ -1,4 +1,3 @@
-//Array
 let listaAmigos = [];
 
 function asignar__Texto__Elemento (elemento, texto) {
@@ -24,7 +23,7 @@ function agregarAmigo() {
         } else {
             listaAmigos.push(nombre);
             document.getElementById("amigo").value = "";
-            actualizarListaAmigos(); // Usamos la nueva función para limpiar y actualizar la lista
+            actualizarListaAmigos(); 
             actualizar__boton__sortear();
         }
     }
@@ -38,7 +37,7 @@ function sortearAmigo() {
 
     let amigoSorteado = listaAmigos[Math.floor(Math.random() * listaAmigos.length)];
     
-    asignar__Texto__Elemento("#resultado", `El amigo secreto es ${amigoSorteado}`); // Mostramos en un <p> en lugar de <ul>
+    asignar__Texto__Elemento("#resultado", `El amigo secreto es ${amigoSorteado}`); 
     
     listaAmigos = []; // Limpiar la lista después de sortear
     actualizarListaAmigos(); // Limpiar la lista en la UI
