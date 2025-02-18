@@ -16,6 +16,12 @@
 }
 
 body {
+
+    /*agregando gradientes*/
+    background: #108dc7;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ef8e38, #108dc7);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ef8e38, #108dc7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     height: 100vh;
     background-color: var(--color-primary);
     display: flex;
@@ -41,6 +47,11 @@ body {
 
 /* Sección de entrada */
 .input-section {
+
+    background: #ADA996;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     flex: 60%;
     background-color: var(--color-secondary);
     border: 1px solid #000;
@@ -65,7 +76,7 @@ body {
     font-family: "Inter", serif;
     font-size: 36px;
     font-weight: 700;
-    color: var(--color-primary);
+    color: black;
     margin: 10px 0;
     text-align: center;
 }
@@ -144,6 +155,7 @@ ul {
 
 /* Botón de sortear título */
 .button-draw {
+
     display: flex;
     align-items: center;
     width: 100%;
@@ -154,9 +166,11 @@ ul {
 }
 
 .button-draw img {
+    
     margin-right: 40px;
 }
 
 .button-draw:hover {
+
     background-color: var(--color-button-hover);
 }
