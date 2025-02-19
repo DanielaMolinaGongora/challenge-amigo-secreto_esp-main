@@ -21,8 +21,8 @@ Editar
 ## 🔧 Instalación y uso
 
 1. Clona el repositorio:
-   ```sh
-   git clone https://github.com/tu-usuario/amigo-secreto.git
+   ```sh[
+   (https://github.com/DanielaMolinaGongora/challenge-amigo-secreto_esp-main.git)
 2. Abre el archivo index.html en tu navegador.
 3. ¡Agrega nombres y realiza el sorteo! 🎉
 
