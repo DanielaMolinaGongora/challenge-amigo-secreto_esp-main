@@ -1,52 +1,84 @@
 let listaAmigos = [];
+let asignaciones = {};
 
-function asignar__Texto__Elemento (elemento, texto) {
-    let elementoHTML = document.querySelector(elemento);
-    elementoHTML.innerHTML = texto;
-    return;
-}
-
-function actualizar__boton__sortear (){
+function actualizar__boton__sortear() {
     let botonSortear = document.getElementById("button-draw");
-    botonSortear.disabled = listaAmigos.length === 0;
+    if (listaAmigos.length >= 2) {
+        botonSortear.disabled = false;
+    } else {
+        botonSortear.disabled = true;
+    }
 }
-
 
 function agregarAmigo() {
-    let nombre;
-    nombre = document.getElementById("amigo").value;
+    let nombre = document.getElementById("amigo").value.trim();
     if (nombre === "") {
         alert("Por favor, ingresa un nombre");
-    } else {
-        if (listaAmigos.includes(nombre)) {
-            alert("Este nombre ya ha sido ingresado, agrega el nombre de otro amigo.");
-        } else {
-            listaAmigos.push(nombre);
-            document.getElementById("amigo").value = "";
-            actualizarListaAmigos(); 
-            actualizar__boton__sortear();
-        }
+        return;
     }
+    if (listaAmigos.includes(nombre)) {
+        alert("Este nombre ya ha sido ingresado.");
+        return;
+    }
+    listaAmigos.push(nombre);
+    document.getElementById("amigo").value = "";
+    actualizarListaAmigos();
+    actualizar__boton__sortear();
 }
 
 function sortearAmigo() {
-    if (listaAmigos.length === 0) {
-        alert("No hay amigos para sortear.");
+    if (listaAmigos.length < 2) {
+        alert("Debe haber al menos dos participantes.");
         return;
     }
 
-    let amigoSorteado = listaAmigos[Math.floor(Math.random() * listaAmigos.length)];
-    
-    asignar__Texto__Elemento("#resultado", `El amigo secreto es ${amigoSorteado}`); 
-    
-    listaAmigos = []; // Limpiar la lista después de sortear
-    actualizarListaAmigos(); // Limpiar la lista en la UI
-    actualizar__boton__sortear();
+    let amigosDisponibles = [...listaAmigos];
+    asignaciones = {};
+
+    for (let amigo of listaAmigos) {
+        let posiblesAmigos = amigosDisponibles.filter(a => a !== amigo);
+        
+        // Si no hay amigos disponibles para asignar, no hacer el sorteo
+        if (posiblesAmigos.length === 0) {
+            alert("Hubo un error en la asignación. Inténtalo de nuevo.");
+            return; // Salir de la función sin realizar el sorteo
+        }
+
+        let indiceAleatorio = Math.floor(Math.random() * posiblesAmigos.length);
+        let amigoSecreto = posiblesAmigos[indiceAleatorio];
+
+        asignaciones[amigo] = amigoSecreto;
+        amigosDisponibles = amigosDisponibles.filter(a => a !== amigoSecreto);
+    }
+
+    mostrarResultados();
+
+    // Limpiar la lista de amigos y la interfaz visual después del sorteo
+    listaAmigos = []; // Vaciar el arreglo
+    actualizarListaAmigos(); // Limpiar la lista visualmente
+}
+
+
+function mostrarResultados() {
+    let resultadosHTML = '';
+    for (let amigo in asignaciones) {
+        resultadosHTML += `
+            <li class="result-item">
+                <span class="amigo">${amigo}</span>
+                <span class="separator">:</span>
+                <span class="amigo-secreto">${asignaciones[amigo]}</span>
+            </li>
+        `;
+    }
+
+    let resultadoLista = document.getElementById("resultado");
+    resultadoLista.innerHTML = resultadosHTML;
+    resultadoLista.classList.add("mostrar");
 }
 
 function actualizarListaAmigos() {
     let ul = document.getElementById("listaAmigos");
-    ul.innerHTML = ""; // Limpiar la lista antes de actualizar
+    ul.innerHTML = "";
 
     for (let amigo of listaAmigos) {
         let li = document.createElement("li");

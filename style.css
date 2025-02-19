@@ -16,17 +16,15 @@
 }
 
 body {
-
-    /*agregando gradientes*/
-    background: #108dc7;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #ef8e38, #108dc7);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #ef8e38, #108dc7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    height: 100vh;
-    background-color: var(--color-primary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        /*agregando gradientes*/
+        background: #108dc7;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #ef8e38, #108dc7);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #ef8e38, #108dc7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 }
 
 .main-content {
@@ -47,14 +45,16 @@ body {
 
 /* Sección de entrada */
 .input-section {
+    backdrop-filter: blur(10px); /* Desenfoque para el efecto moderno */
+    background: rgba(255, 255, 255, 0.3); /* Fondo translúcido */
+    
+    /* Degradado suave */
+    background: linear-gradient(to right, rgba(234, 234, 234, 0.5), rgba(219, 219, 219, 0.5), rgba(242, 242, 242, 0.5), rgba(173, 169, 150, 0.5));
 
-    background: #ADA996;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    border: 1px solid rgba(0, 0, 0, 0.2); /* Borde ligero */
 
     flex: 60%;
-    background-color: var(--color-secondary);
-    border: 1px solid #000;
     border-radius: 64px 64px 0 0;
     display: flex;
     flex-direction: column;
@@ -66,29 +66,30 @@ body {
 /* Títulos */
 .main-title {
     font-size: 48px;
-    font-family: "Merriweather", serif;
-    font-weight: 900;
-    font-style: italic;
+    font-weight: 300;
+    font-family: "Merriweather", sans-serif;
     color: var(--color-white);
 }
 
 .section-title {
-    font-family: "Inter", serif;
+    font-family: "Inter", sans-serif;
     font-size: 36px;
-    font-weight: 700;
+    font-weight: 600;
     color: black;
     margin: 10px 0;
     text-align: center;
 }
 
-/* Contenedores de entrada y botón */
+
+/* Input */
 .input-wrapper {
     display: flex;
-    justify-content: center;
     width: 100%;
     max-width: 600px;
     margin-top: 20px;
+    justify-content: space-between;
 }
+
 
 .input-name {
     width: 100%;
@@ -98,6 +99,7 @@ body {
     font-size: 16px;
 }
 
+/* Botones */
 .button-container {
     width: 300px;
     justify-content: center;
@@ -115,15 +117,14 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Estilos de botón */
 button {
     padding: 15px 30px;
     font-family: "Inter", sans-serif;
     font-size: 16px;
     border: 2px solid #000;
     border-radius: 25px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 .button-add {
@@ -134,9 +135,50 @@ button {
 
 .button-add:hover {
     background-color: #a1a1a1;
+    transform: scale(1.05);
 }
 
-/* Listas */
+/* Botón sortear */
+.button-draw {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+    color: var(--color-white);
+    background-color: var(--color-button);
+    font-size: 16px;
+    margin-top: 20px; /* Se añadió margen superior */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.button-draw img {
+    margin-right: 10px;
+}
+
+.button-draw:hover {
+    background-color: var(--color-button-hover);
+    transform: scale(1.05);
+}
+
+.button-draw:disabled {
+    background-color: var(--color-tertiary);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+
+/* Lista de amigos ingresados */
+.lista-amigos {
+    list-style: none;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 18px;
+    font-family: "Inter", sans-serif;
+    text-align: center;
+}
+
 ul {
     list-style-type: none;
     color: var(--color-text);
@@ -145,32 +187,56 @@ ul {
     margin: 20px 0;
 }
 
+/* Lista de resultados */
 .result-list {
-    margin-top: 15px;
-    color: #05DF05;
-    font-size: 22px;
-    font-weight: bold;
+    display: none;
+    padding: 0;
+    margin-top: 20px;
+    font-size: 18px;
+    font-family: "Inter", sans-serif;
     text-align: center;
+    animation: fadeIn 1s ease-in-out forwards;
 }
 
-/* Botón de sortear título */
-.button-draw {
+.result-list.mostrar {
+    display: block;
+}
 
+/* Estilo de los resultados */
+.result-item {
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 15px;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.1);
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
-    padding: 10px 40px;
-    color: var(--color-white);
-    background-color: var(--color-button);
-    font-size: 16px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-.button-draw img {
-    
-    margin-right: 40px;
+
+/* Estilos para los nombres en la lista */
+.amigo {
+    color: var(--color-primary);
+    font-weight: bold;
 }
 
-.button-draw:hover {
-
-    background-color: var(--color-button-hover);
+.separator {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--color-button);
 }
+
+.amigo-secreto {
+    color: green;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
