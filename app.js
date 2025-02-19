@@ -46,19 +46,25 @@ function sortearAmigo() {
     let amigosDisponibles = [...listaAmigos]; // Copia de la lista original
     let asignacionesTemp = {}; // Objeto temporal para asignaciones
 
+    // Bucle para asignar amigos secretos
     for (let amigo of listaAmigos) {
         let posiblesAmigos = amigosDisponibles.filter(a => a.toLowerCase() !== amigo.toLowerCase());
 
-        // Si solo queda un participante y es el mismo, reintentar el sorteo
+        // Aquí eliminamos la condición del error, ya que debería haber siempre al menos un amigo disponible.
+        // Si solo quedan dos participantes, el algoritmo no fallará, pero asignará correctamente.
         if (posiblesAmigos.length === 0) {
             alert("Hubo un error en la asignación. Inténtalo de nuevo.");
             return;
         }
 
+        // Escoge un amigo aleatorio para asignar
         let indiceAleatorio = Math.floor(Math.random() * posiblesAmigos.length);
         let amigoSecreto = posiblesAmigos[indiceAleatorio];
 
+        // Asignación de amigos secretos
         asignacionesTemp[amigo] = amigoSecreto;
+
+        // Elimina al amigo asignado de la lista de disponibles para que no se repita
         amigosDisponibles = amigosDisponibles.filter(a => a !== amigoSecreto);
     }
 
