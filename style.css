@@ -20,11 +20,15 @@ body {
         background: #108dc7;  /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #ef8e38, #108dc7);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #ef8e38, #108dc7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
+
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        font-size: 16px;
 }
 
 .main-content {
@@ -45,14 +49,12 @@ body {
 
 /* Sección de entrada */
 .input-section {
-    backdrop-filter: blur(10px); /* Desenfoque para el efecto moderno */
-    background: rgba(255, 255, 255, 0.3); /* Fondo translúcido */
-    
-    /* Degradado suave */
+    backdrop-filter: blur(10px); 
+    background: rgba(255, 255, 255, 0.3); 
     background: linear-gradient(to right, rgba(234, 234, 234, 0.5), rgba(219, 219, 219, 0.5), rgba(242, 242, 242, 0.5), rgba(173, 169, 150, 0.5));
 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-    border: 1px solid rgba(0, 0, 0, 0.2); /* Borde ligero */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
 
     flex: 60%;
     border-radius: 64px 64px 0 0;
@@ -69,6 +71,8 @@ body {
     font-weight: 300;
     font-family: "Merriweather", sans-serif;
     color: var(--color-white);
+
+    text-align: center;
 }
 
 .section-title {
@@ -87,7 +91,11 @@ body {
     width: 100%;
     max-width: 600px;
     margin-top: 20px;
-    justify-content: space-between;
+    justify-content: center;
+
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
 }
 
 
@@ -96,7 +104,11 @@ body {
     padding: 10px;
     border: 2px solid #000;
     border-radius: 25px 0 0 25px;
-    font-size: 16px;
+    font-size: 1rem;
+
+    max-width: 300px;
+    margin: 0;
+    height: 50px;
 }
 
 /* Botones */
@@ -105,32 +117,17 @@ body {
     justify-content: center;
 }
 
-/* Estilos de entrada de texto */
-.input-title {
-    flex: 1;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: 2px solid #333;
-    border-right: none;
-    border-radius: 25px 0 0 25px;
-    font-family: "Merriweather", serif;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-button {
-    padding: 15px 30px;
-    font-family: "Inter", sans-serif;
-    font-size: 16px;
-    border: 2px solid #000;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
 .button-add {
     background-color: var(--color-tertiary);
     color: var(--color-text);
     border-radius: 0 25px 25px 0;
+    
+    max-width: 150px;
+    margin: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button-add:hover {
@@ -148,7 +145,7 @@ button {
     color: var(--color-white);
     background-color: var(--color-button);
     font-size: 16px;
-    margin-top: 20px; /* Se añadió margen superior */
+    margin-top: 20px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
@@ -168,15 +165,40 @@ button {
     opacity: 0.5;
 }
 
+button {
+    padding: 15px 30px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    border: 2px solid #000;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Estilos de entrada de texto */
+.input-title {
+    flex: 1;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #333;
+    border-right: none;
+    border-radius: 25px 0 0 25px;
+    font-family: "Merriweather", serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
 
 /* Lista de amigos ingresados */
 .lista-amigos {
     list-style: none;
-    padding: 10px;
+    padding: 0;
     margin-top: 10px;
     font-size: 18px;
     font-family: "Inter", sans-serif;
     text-align: center;
+
 }
 
 ul {
@@ -240,3 +262,14 @@ ul {
     100% { opacity: 1; }
 }
 
+@media screen and (max-width: 768px) {
+    button {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .input-wrapper {
+        flex-direction: column;
+    }
+}

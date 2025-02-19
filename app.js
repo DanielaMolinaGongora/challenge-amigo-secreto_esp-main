@@ -22,6 +22,7 @@ function agregarAmigo() {
     }
     listaAmigos.push(nombre);
     document.getElementById("amigo").value = "";
+    document.getElementById("amigo").blur();
     actualizarListaAmigos();
     actualizar__boton__sortear();
 }
