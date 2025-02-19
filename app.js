@@ -3,23 +3,32 @@ let asignaciones = {};
 
 function actualizar__boton__sortear() {
     let botonSortear = document.getElementById("button-draw");
-    if (listaAmigos.length >= 2) {
-        botonSortear.disabled = false;
-    } else {
-        botonSortear.disabled = true;
-    }
+    botonSortear.disabled = listaAmigos.length < 2;
 }
+
 
 function agregarAmigo() {
     let nombre = document.getElementById("amigo").value.trim();
+
+    // Expresión para validar solo letras y espacios
+    let regex = /^[A-Za-zÁáÉéÍíÓóÚúÑñ\s]+$/;
     if (nombre === "") {
         alert("Por favor, ingresa un nombre");
         return;
     }
-    if (listaAmigos.includes(nombre)) {
+
+    if (!regex.test(nombre)) {
+        alert("El nombre solo puede contener letras y espacios.");
+        return;
+    }
+
+    let nombreNormalizado = nombre.toLowerCase(); // Convertir a minúsculas para evitar duplicados
+
+    if (listaAmigos.some(amigo => amigo.toLowerCase() === nombreNormalizado)) {
         alert("Este nombre ya ha sido ingresado.");
         return;
     }
+
     listaAmigos.push(nombre);
     document.getElementById("amigo").value = "";
     document.getElementById("amigo").blur();
@@ -27,41 +36,39 @@ function agregarAmigo() {
     actualizar__boton__sortear();
 }
 
+
 function sortearAmigo() {
     if (listaAmigos.length < 2) {
         alert("Debe haber al menos dos participantes.");
         return;
     }
 
-    let amigosDisponibles = [...listaAmigos];
-    asignaciones = {};
+    let amigosDisponibles = [...listaAmigos]; // Copia de la lista original
+    let asignacionesTemp = {}; // Objeto temporal para asignaciones
 
     for (let amigo of listaAmigos) {
-        let posiblesAmigos = amigosDisponibles.filter(a => a !== amigo);
-        
-        // Si no hay amigos disponibles para asignar, no hacer el sorteo
+        let posiblesAmigos = amigosDisponibles.filter(a => a.toLowerCase() !== amigo.toLowerCase());
+
+        // Si solo queda un participante y es el mismo, reintentar el sorteo
         if (posiblesAmigos.length === 0) {
             alert("Hubo un error en la asignación. Inténtalo de nuevo.");
-            return; // Salir de la función sin realizar el sorteo
+            return;
         }
 
         let indiceAleatorio = Math.floor(Math.random() * posiblesAmigos.length);
         let amigoSecreto = posiblesAmigos[indiceAleatorio];
 
-        asignaciones[amigo] = amigoSecreto;
+        asignacionesTemp[amigo] = amigoSecreto;
         amigosDisponibles = amigosDisponibles.filter(a => a !== amigoSecreto);
     }
 
+    // Si todo está correcto, asignamos los resultados
+    asignaciones = asignacionesTemp;
     mostrarResultados();
-
-    // Limpiar la lista de amigos y la interfaz visual después del sorteo
-    listaAmigos = []; // Vaciar el arreglo
-    actualizarListaAmigos(); // Limpiar la lista visualmente
 }
 
-
 function mostrarResultados() {
-    let resultadosHTML = '';
+    let resultadosHTML = "";
     for (let amigo in asignaciones) {
         resultadosHTML += `
             <li class="result-item">
@@ -72,10 +79,23 @@ function mostrarResultados() {
         `;
     }
 
+    // Mostrar resultados en la lista
     let resultadoLista = document.getElementById("resultado");
     resultadoLista.innerHTML = resultadosHTML;
     resultadoLista.classList.add("mostrar");
+
+    // Limpiar lista de amigos visualmente
+    listaAmigos = [];
+    document.getElementById("listaAmigos").innerHTML = "";
+    actualizar__boton__sortear(); 
+
+    // Mostrar alert y refrescar la página después de 3 segundos
+    setTimeout(() => {
+        alert("El sorteo ha finalizado. La página se refrescará para un nuevo juego.");
+        location.reload();
+    }, 3000);
 }
+
 
 function actualizarListaAmigos() {
     let ul = document.getElementById("listaAmigos");
